@@ -86,6 +86,8 @@ class Student(Person):
         self.Program = Program
         self.enrolled_courses = enrolled_courses
         self.course_grades = {i: {"TP": None, "DS": None, "Project": None, "TD": None, "final": None} for i in enrolled_courses}
+        self.final_grades = {i: None for i in enrolled_courses}
+
 
     def get_course_grades(self, course):
         return self.course_grades[course]
@@ -113,16 +115,18 @@ class Course:
 
 
     def set_grades(self):
-
-            for student in sorted(self.Students):
-                student.course_grades[self.name]["TP"] = float(input(f"{student} TP: "))
-                student.course_grades[self.name]["DS"] = float(input(f"{student} DS: "))
-                student.course_grades[self.name]["TD"] = float(input(f"{student} TD: "))
-                student.course_grades[self.name]["Project"] = float(input(f"{student} Project: "))
+        for elem in self.elements:
+            if self.coeffs[elem] != 0:
+                for student in sorted(self.Students):
+                    student.course_grades[self.name][elem] = float(input(f"{student} {elem}: "))
 
 
     def set_final_grade(self):
         for student in sorted(self.Students):
-            for i in ["TP", "DS", "TD", "Project"]:
-                if student.course_grades[self.name][i] == None:
-                    student.course_grades[self.name][i] = 0
+            final_grade = 0
+            for i in self.elements:
+                if student.course_grades[self.name][i] != None:
+                    final_grade += student.course_grades[self.name][i] * self.coeffs[i]
+            student.final_grades[self.name] = final_grade
+
+# Um6p=University("bfgn fhnf","fqdfbqh","gherh","hgkjgj","etyuu","ertyuii",['y','n'])
