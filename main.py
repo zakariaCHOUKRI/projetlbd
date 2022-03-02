@@ -11,6 +11,7 @@ class University:
         self.email = email
         self.date_founded = date_founded
         self.list_of_schools = list_of_schools
+        self.Staff = []
 
     def display(self):
         print("name:", self.name,
