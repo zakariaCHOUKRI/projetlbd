@@ -128,5 +128,3 @@ class Course:
                 if student.course_grades[self.name][i] != None:
                     final_grade += student.course_grades[self.name][i] * self.coeffs[i]
             student.final_grades[self.name] = final_grade
-
-# Um6p=University("bfgn fhnf","fqdfbqh","gherh","hgkjgj","etyuu","ertyuii",['y','n'])
