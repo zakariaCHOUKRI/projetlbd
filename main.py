@@ -11,7 +11,6 @@ class University:
         self.email = email
         self.date_founded = date_founded
         self.list_of_schools = list_of_schools
-        self.Staff = []
 
     def display(self):
         print("name:", self.name,
@@ -48,15 +47,15 @@ class School:
 class Program:
     """This is the school class"""
 
-    def __init__(self, name: str, address: str, website: str, telephone: str, email: str, date_founded: str, list_of_courses: list, list_of_students: list):
+    def __init__(self, name: str, address: str, website: str, telephone: str, email: str, date_founded: str):
         self.name = name
         self.address = address
         self.website = website
         self.telephone = telephone
         self.email = email
         self.date_founded = date_founded
-        self.list_of_courses = list_of_courses
-        self.list_of_students = list_of_students
+        # self.list_of_courses = list_of_courses
+        # self.list_of_promos = list_of_promos
 
     def display(self):
         print("name:", self.name,
@@ -66,7 +65,7 @@ class Program:
               "\nemail:", self.email,
               "\ndate_founded:", self.date_founded,
               "\nlist_of_subjects:", self.list_of_courses,
-              "\nlist_of_students:", self.list_of_students)
+              "\nlist_of_promos:", self.list_of_promos)
 
 class Person(ABC):
     """This is the person class"""
@@ -82,9 +81,9 @@ class Person(ABC):
 class Student(Person):
     """This is the student class"""
 
-    def __init__(self, name: str, ID: int, email: str, Program: Program, enrolled_courses: list):
+    def __init__(self, name: str, ID: int, email: str, enrolled_courses: list):
         super().__init__(name, ID, email)
-        self.Program = Program
+        # self.Program = Program
         self.enrolled_courses = enrolled_courses
         self.course_grades = {i: {"TP": None, "DS": None, "Project": None, "TD": None, "final": None} for i in enrolled_courses}
         self.final_grades = {i: None for i in enrolled_courses}
@@ -102,10 +101,10 @@ class Course:
     """This is the course class"""
 
 
-    def __init__(self, name, Students, Professor, infos: dict = None):
+    def __init__(self, name, Professor,  promo, infos: dict = None):
 
         self.name = name
-        self.Students = Students
+        self.list_of_promos = list_of_promos
         self.infos = infos
         self.Professor = Professor
         self.elements = ["DS", "TP", "TD", "Project"]
@@ -124,7 +123,7 @@ class Course:
                     student.course_grades[self.name][elem] = float(input(f"{student} {elem}: "))
 
 
-    def set_final_grade(self):
+    def set_final_grads(self):
         for student in sorted(self.Students):
             final_grade = 0
             for i in self.elements:
@@ -159,12 +158,19 @@ class Promo:
     def display(self):
         pass
 
-fri = Student("free", 71, "fri@um6p.ma", ingenior_info, [LBD, analise])
-basma = Student("bsma", 97, "bsma@um6p.ma", ingenior_info, [LBD, analise])
-assklou = Professor("Assklou", 123, "assklou@um6p.ma", [ingenior_info])
+
+ingenior_info = Program("ing cs", "bngrir", "um6p-cs.ma", "0811", "cs@um6p.ma", "2021")
 mol_analyse = Professor("mol_analyse", 23, "analyse@um6p.ma", [ingenior_info])
-lbd = Course("lbd", [fri, basma], assklou)
-analise = Course("analyse", [fri, basma], mol_analyse)
-ingenior_info = Program("ing cs", "bngrir", "um6p-cs.ma", "0811", "cs@um6p.ma", "2021", [lbd, analise], [fri, basma])
+shadow = Professor("shadow", 123, "shadow@um6p.ma", [ingenior_info])
+analise = Course("analyse", mol_analyse)
+lbd = Course("lbd", shadow)
+fri = Student("free", 71, "fri@um6p.ma", [lbd, analise])
+basma = Student("bsma", 97, "bsma@um6p.ma", [lbd, analise])
+cs2026 = Promo([basma, fri], "2026")
 cs = School("cs", "bngrir", "um6p-cs.ma", "0811", "cs@um6p.ma", "2018", [ingenior_info])
-um6p = University("um6p", "bngrir", "um6p.ma", "0811", "um6p@um6p.ma", "2013",)
+um6p = University("um6p", "bngrir", "um6p.ma", "0811", "um6p@um6p.ma", "2013", [cs])
+
+lbd.st
+
+lbd.set_coeff()
+lbd.set_grades()
